@@ -1,4 +1,4 @@
-import { Text, View, Alert } from 'react-native'
+import { Text, View, Alert, ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import tailwind from "tailwind-rn";
 import { TextInput, Button, Dimensions } from 'react-native';
@@ -9,19 +9,20 @@ import { PieChart } from 'react-native-chart-kit';
 import Geofence from '../component/Geofence.js';
 
 
+
 const Present = 75;
 
 const data = [
 	{
 		name: 'Present',
-		attandace: Present,
+		attendance: Present,
 		color: '#32CD32',
 		legendFontColor: '#7F7F7F',
 		legendFontSize: 15,
 	},
 	{
 		name: 'Absent',
-		attandace: 100 - Present,
+		attendance: 100 - Present,
 		color: 'red',
 		legendFontColor: '#7F7F7F',
 		legendFontSize: 15,
@@ -51,6 +52,7 @@ export class Dashboard extends Component {
 	render() {
 		return (
 			<>
+			<ScrollView>
 				<View style={tailwind("bg-yellow-200 mx-2 mb-3 mt-8 rounded-xl")}>
 					<View style={tailwind("flex-row justify-between")}>
 						<Text style={tailwind("items-center text-3xl font-semibold text-red-500 px-5  mt-5")}>
@@ -93,13 +95,14 @@ export class Dashboard extends Component {
 						width={Dimensions.get('window').width}
 						height={220}
 						chartConfig={chartConfig}
-						accessor="attandace"
+						accessor="attendance"
 						backgroundColor="transparent"
 						paddingLeft="15"
 					/>
 				</View>
 				{/* <GeofencingExample /> */}
 				<Geofence/>
+				</ScrollView>
 			</>
 
 		)
