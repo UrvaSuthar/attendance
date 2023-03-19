@@ -1,9 +1,45 @@
 import { Text, View, Alert } from 'react-native'
 import React, { Component } from 'react'
 import tailwind from "tailwind-rn";
-import { TextInput, Button } from 'react-native';
+import { TextInput, Button, Dimensions } from 'react-native';
 import { MapPinIcon, ArrowRightIcon } from "react-native-heroicons/solid";
 import { Cog6ToothIcon } from "react-native-heroicons/outline";
+import { PieChart } from 'react-native-chart-kit';
+// import GeofencingExample from '../component/GeofencingExample';
+import Geofence from '../component/Geofence.js';
+
+
+const Present = 75;
+
+const data = [
+	{
+		name: 'Present',
+		attandace: Present,
+		color: '#32CD32',
+		legendFontColor: '#7F7F7F',
+		legendFontSize: 15,
+	},
+	{
+		name: 'Absent',
+		attandace: 100 - Present,
+		color: 'red',
+		legendFontColor: '#7F7F7F',
+		legendFontSize: 15,
+	}
+];
+
+const chartConfig = {
+	backgroundColor: '#ffffff',
+	backgroundGradientFrom: '#ffffff',
+	backgroundGradientTo: '#ffffff',
+	decimalPlaces: 0, // optional, defaults to 2dp
+	color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+	labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+	style: {
+		borderRadius: 16,
+	},
+};
+
 
 
 
@@ -15,16 +51,16 @@ export class Dashboard extends Component {
 	render() {
 		return (
 			<>
-				<View style={tailwind("bg-yellow-200 mx-2 mb-3 rounded-xl")}>
+				<View style={tailwind("bg-yellow-200 mx-2 mb-3 mt-8 rounded-xl")}>
 					<View style={tailwind("flex-row justify-between")}>
-					<Text style={tailwind("items-center text-3xl font-semibold text-red-500 px-5  mt-5")}>
-						AttendMe
-					</Text>
-					<Cog6ToothIcon
-						style={tailwind("p-3 mt-6 mx-6")} 
-						size="27"
-						color="red"
-					></Cog6ToothIcon>
+						<Text style={tailwind("items-center text-3xl font-semibold text-red-500 px-5  mt-5")}>
+							AttendMe
+						</Text>
+						<Cog6ToothIcon
+							style={tailwind("p-3 mt-6 mx-6")}
+							size="27"
+							color="red"
+						></Cog6ToothIcon>
 					</View>
 					<View style={tailwind("flex-row items-center")}>
 						<Text style={tailwind("items-center text-xl text-gray-500 px-5 my-3 mb-5")}>
@@ -50,6 +86,20 @@ export class Dashboard extends Component {
 						<MapPinIcon style={tailwind("p-3 mt-1 mx-2")} />
 					</View>
 				</View>
+
+				<View>
+					<PieChart
+						data={data}
+						width={Dimensions.get('window').width}
+						height={220}
+						chartConfig={chartConfig}
+						accessor="attandace"
+						backgroundColor="transparent"
+						paddingLeft="15"
+					/>
+				</View>
+				{/* <GeofencingExample /> */}
+				<Geofence/>
 			</>
 
 		)
